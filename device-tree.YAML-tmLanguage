@@ -1,0 +1,69 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+#
+# Made by Justin Watson on 2017 Sept. 15 Sublime Text 3 build 3126
+#
+# This is a syntax highlighter for Device Tree. I had the Device Tree
+# Specification "devicetree-specification-v0.1-20160524".
+#
+# First I installed PackageDev using the Sublime Text 3 package manager.
+# Then I made the device-tree.YAML-tmLanguage file. I then opened the YAML-tmLanguage
+# file and an example of the source. I would add a pattern to the YAML-tmLanguage
+# file and then hit F7 and select "Convert to Propert List". I would then
+# go to the example source and hit ctrl+shift+p to set the syntax. Then I
+# would confirm it visually. I made sure to use the language grammar defined
+# by textmate so that my color theme would be applied.
+#
+# I tried different naming conventions for some of the items to get more
+# colors in the file to make it easier to read.
+#
+# Important links on how to make this file are....
+# (http://docs.sublimetext.info/en/latest/extensibility/syntaxdefs.html)
+# (http://manual.macromates.com/en/language_grammars#language_grammars)
+#
+# Order your matches from most specific to less specific. e.g. match ENDIF
+# before EN in the file. Otherwise you will end up with EN the right color
+# but not the D.
+#
+# To match using characters, but not include characters in the highlight use...
+#
+#     Note that the regular expressions are matched against only a single line
+#     of the document at a time. That means it is not possible to use a pattern
+#     that matches multiple lines. The reason for this is technical: being able
+#     to restart the parser at an arbitrary line and having to re-parse only the
+#     minimal number of lines affected by an edit. In most situations it is
+#     possible to use the begin/end model to overcome this limitation
+#     [http://manual.macromates.com/en/language_grammars#language_grammars].
+#
+name: Device Tree
+scopeName: source.devicetree
+fileTypes: [dts, dtsi]
+uuid: f8106bbd-6378-40f2-b68e-d374441a0b9d
+
+patterns:
+- name: string.quoted.single.devicetree
+  match: '"[^"]*"'
+
+- name: constant.unit-address.devicetree
+  match: \@[0-9A-Fa-f]*
+
+- comment: Standard Properties
+  name: keyword.standardproperties.devicetree
+  match: (?i)\b(compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)(?=$|[\ \t,;="&()/:])
+
+- name: keyword.standard.devicetree
+  match: \#include
+
+- comment: Numeric Values
+  name: constant.numeric.devicetree
+  match: ((0x)[0-9A-Fa-f]*)
+
+- name: comment.devicetree
+  match: (\#.*$)
+
+- comment: Multiline Comment
+  name: comment.multiline.devicetree
+  begin: /\*
+  captures:
+    '1':
+      name: comment.devicetree
+  end: \*/
