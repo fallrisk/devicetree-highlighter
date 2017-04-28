@@ -34,36 +34,45 @@
 #     possible to use the begin/end model to overcome this limitation
 #     [http://manual.macromates.com/en/language_grammars#language_grammars].
 #
-name: Device Tree
+name: Devicetree
 scopeName: source.devicetree
 fileTypes: [dts, dtsi]
 uuid: f8106bbd-6378-40f2-b68e-d374441a0b9d
 
 patterns:
-- name: string.quoted.single.devicetree
-  match: '"[^"]*"'
+- comment: Multiline Comment
+  name: comment.block.devicetree
+  begin: /\*
+  end: \*/
 
-- name: constant.unit-address.devicetree
-  match: \@[0-9A-Fa-f]*
+# Since libraries can be added via quotes I am going to make the text following
+# a #include statement always show up as string.quoted.double so it gets the
+# same style.
+- name: keyword.standard.devicetree
+  match: \#include (.*)
+  captures:
+    '1': { name: 'string.quoted.double.devicetree' }
+
+- comment: Devicetree Node, page 43
+  name: node.devicetree
+  match: ([A-Za-z0-9]*:\s)?([A-Za-z0-9\-]*)(\@)?(\d*)\s*\{
+  captures:
+    '1': { name: 'entity.name.label.node.devicetree' }
+    '2': { name: 'entity.name.type.node-name.node.devicetree' }
+    '3': { name: 'keyword.operator.unit-address.node.devicetree' }
+    '4': { name: 'constant.numeric.unit-address.node.devicetree' }
+
+- name: string.quoted.double.devicetree
+  begin: '"'
+  end: '"'
 
 - comment: Standard Properties
-  name: keyword.standardproperties.devicetree
+  name: variable.language.devicetree
   match: (?i)\b(compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)(?=$|[\ \t,;="&()/:])
-
-- name: keyword.standard.devicetree
-  match: \#include
 
 - comment: Numeric Values
   name: constant.numeric.devicetree
-  match: ((0x)[0-9A-Fa-f]*)
+  match: ((0x)?[0-9A-Fa-f]*)
 
-- name: comment.devicetree
+- name: comment.line.number-sign.devicetree
   match: (\#.*$)
-
-- comment: Multiline Comment
-  name: comment.multiline.devicetree
-  begin: /\*
-  captures:
-    '1':
-      name: comment.devicetree
-  end: \*/
