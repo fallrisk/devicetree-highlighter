@@ -1,6 +1,6 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 #
-# Made by Justin Watson on 2017 Sept. 15 Sublime Text 3 build 3126
+# Made by Justin Watson on 2017 Apr. 27, Sublime Text 3 build 3126
 #
 # This is a syntax highlighter for Device Tree. I had the Device Tree
 # Specification "devicetree-specification-v0.1-20160524".
@@ -48,31 +48,54 @@ patterns:
 # Since libraries can be added via quotes I am going to make the text following
 # a #include statement always show up as string.quoted.double so it gets the
 # same style.
+- comment: Version I.D.
+  name: support.constant.file-version.devicetree
+  match: ^/dts-[a-z0-9]*/;$
+
 - name: keyword.standard.devicetree
   match: \#include (.*)
   captures:
     '1': { name: 'string.quoted.double.devicetree' }
 
+- name: keyword.standard.define.devicetree
+  match: \#define\s([^\s]*)\s(.*)
+  captures:
+    '1': { name: 'entity.name.type.macro.name.devicetree' }
+    '2': { name: 'string.other.macro.value.devicetree'}
+
 - comment: Devicetree Node, page 43
   name: node.devicetree
-  match: ([A-Za-z0-9]*:\s)?([A-Za-z0-9\-]*)(\@)?(\d*)\s*\{
+  match: \b([A-Za-z0-9]*:\s)?([A-Za-z0-9\_-]*)(\@)?([A-Za-z0-9\_-]*)\s*\{
   captures:
-    '1': { name: 'entity.name.label.node.devicetree' }
+    '1': { name: 'storage.type.label.node.devicetree' }
     '2': { name: 'entity.name.type.node-name.node.devicetree' }
     '3': { name: 'keyword.operator.unit-address.node.devicetree' }
     '4': { name: 'constant.numeric.unit-address.node.devicetree' }
 
-- name: string.quoted.double.devicetree
-  begin: '"'
-  end: '"'
+- comment: Property Definition
+  name: property-definition.devicetree
+  match: \b([A-Za-z0-9]*:\s)?([A-Za-z0-9\,\_\-]*)\s?=.*;
+  captures:
+    '1': { name: 'storage.type.label.node.devicetree' }
+    '2': { name: 'variable.property-name.devicetree' }
+  patterns:
+  - include: '#numeric'
+  - include: '#quote'
+
+- name: comment.line.number-sign.devicetree
+  match: (\#.*$)
 
 - comment: Standard Properties
   name: variable.language.devicetree
   match: (?i)\b(compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)(?=$|[\ \t,;="&()/:])
 
-- comment: Numeric Values
-  name: constant.numeric.devicetree
-  match: ((0x)?[0-9A-Fa-f]*)
-
-- name: comment.line.number-sign.devicetree
-  match: (\#.*$)
+repository:
+  numeric:
+    patterns:
+    - name: constant.numeric.devicetree
+      match: ((0x)?[0-9A-Fa-f]*)
+  quote:
+    patterns:
+    - name: string.quoted.double.devicetree
+      begin: '"'
+      end: '"'
