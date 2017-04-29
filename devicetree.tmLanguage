@@ -89,39 +89,40 @@
 			<key>comment</key>
 			<string>Devicetree Node, page 43</string>
 			<key>match</key>
-			<string>\b([A-Za-z0-9]*:\s)?([A-Za-z0-9\_-]*)(\@)?([A-Za-z0-9\_-]*)\s*\{</string>
+			<string>\b(?:([A-Za-z0-9]*):\s)?([A-Za-z0-9\_-]*)(\@)?([A-Za-z0-9\_-]*)\s*\{</string>
 			<key>name</key>
 			<string>node.devicetree</string>
 		</dict>
 		<dict>
-			<key>captures</key>
+			<key>begin</key>
+			<string>([\w,-]*)\s=</string>
+			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
 				<dict>
 					<key>name</key>
 					<string>storage.type.label.node.devicetree</string>
 				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>variable.property-name.devicetree</string>
-				</dict>
 			</dict>
 			<key>comment</key>
 			<string>Property Definition</string>
-			<key>match</key>
-			<string>\b([A-Za-z0-9]*:\s)?([A-Za-z0-9\,\_\-]*)\s?=.*;</string>
+			<key>end</key>
+			<string>\;</string>
 			<key>name</key>
 			<string>property-definition.devicetree</string>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#numeric</string>
+					<string>#quote</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#quote</string>
+					<string>#macro-def</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#numeric</string>
 				</dict>
 			</array>
 		</dict>
@@ -131,24 +132,28 @@
 			<key>name</key>
 			<string>comment.line.number-sign.devicetree</string>
 		</dict>
-		<dict>
-			<key>comment</key>
-			<string>Standard Properties</string>
-			<key>match</key>
-			<string>(?i)\b(compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)(?=$|[\ \t,;="&amp;()/:])</string>
-			<key>name</key>
-			<string>variable.language.devicetree</string>
-		</dict>
 	</array>
 	<key>repository</key>
 	<dict>
+		<key>macro-def</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>([\w_])*</string>
+					<key>name</key>
+					<string>constant.numeric.devicetree</string>
+				</dict>
+			</array>
+		</dict>
 		<key>numeric</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>match</key>
-					<string>((0x)?[0-9A-Fa-f]*)</string>
+					<string>((0x)?\h*)</string>
 					<key>name</key>
 					<string>constant.numeric.devicetree</string>
 				</dict>
