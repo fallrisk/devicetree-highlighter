@@ -48,47 +48,48 @@ patterns:
 # Since libraries can be added via quotes I am going to make the text following
 # a #include statement always show up as string.quoted.double so it gets the
 # same style.
-- comment: Version I.D.
+- comment: 'Version I.D.'
   name: support.constant.file-version.devicetree
   match: ^/dts-[a-z0-9]*/;$
 
 - name: keyword.standard.devicetree
   match: \#include (.*)
   captures:
-    '1': { name: 'string.quoted.double.devicetree' }
+    '1': { name: string.quoted.double.devicetree }
 
 - name: keyword.standard.define.devicetree
   match: \#define\s([^\s]*)\s(.*)
   captures:
-    '1': { name: 'entity.name.type.macro.name.devicetree' }
-    '2': { name: 'string.other.macro.value.devicetree'}
+    '1': { name: entity.name.type.macro.name.devicetree }
+    '2': { name: string.other.macro.value.devicetree }
 
-- comment: Devicetree Node, page 43
+- comment: 'Devicetree Node, page 43'
   name: node.devicetree
   match: \b(?:([A-Za-z0-9]*):\s)?([A-Za-z0-9\_-]*)(\@)?([A-Za-z0-9\_-]*)\s*\{
   captures:
-    '1': { name: 'storage.type.label.node.devicetree' }
-    '2': { name: 'entity.name.type.node-name.node.devicetree' }
-    '3': { name: 'keyword.operator.unit-address.node.devicetree' }
-    '4': { name: 'constant.numeric.unit-address.node.devicetree' }
+    '1': { name: storage.type.label.node.devicetree }
+    '2': { name: entity.name.type.node-name.node.devicetree }
+    '3': { name: keyword.operator.unit-address.node.devicetree }
+    '4': { name: constant.numeric.unit-address.node.devicetree }
 
-- comment: Property Definition
+- comment: 'Property Definition'
   name: property-definition.devicetree
-  begin: ([\w,-]*)\s=
+  begin: ((compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)|[\w,-]*)\s=
   beginCaptures:
-    '1': { name: 'storage.type.label.node.devicetree' }
+    '1': { name: variable.property-name.devicetree }
+    '2': { name: variable.language.devicetree }
   end: \;
   patterns:
   - include: '#quote'
   - include: '#macro-def'
   - include: '#numeric'
 
-- name: comment.line.number-sign.devicetree
-  match: (\#.*$)
-
-# - comment: Standard Properties
-#   name: variable.language.devicetree
-#   match: (?i)\b(compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)(?=$|[\ \t,;="&()/:])
+- comment: 'This is for property definitions with empty value. Example: ranges;'
+  name: empty.property-defintion.devicetree
+  match: ((compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)|[\w,-]*)\;
+  captures:
+    '1': { name: variable.property-name.devicetree }
+    '2': { name: variable.language.devicetree }
 
 repository:
   numeric:

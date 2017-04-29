@@ -95,13 +95,18 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>([\w,-]*)\s=</string>
+			<string>((compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)|[\w,-]*)\s=</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>storage.type.label.node.devicetree</string>
+					<string>variable.property-name.devicetree</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>variable.language.devicetree</string>
 				</dict>
 			</dict>
 			<key>comment</key>
@@ -127,10 +132,25 @@
 			</array>
 		</dict>
 		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>variable.property-name.devicetree</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>variable.language.devicetree</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>This is for property definitions with empty value. Example: ranges;</string>
 			<key>match</key>
-			<string>(\#.*$)</string>
+			<string>((compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)|[\w,-]*)\;</string>
 			<key>name</key>
-			<string>comment.line.number-sign.devicetree</string>
+			<string>empty.property-defintion.devicetree</string>
 		</dict>
 	</array>
 	<key>repository</key>
