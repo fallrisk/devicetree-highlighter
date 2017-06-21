@@ -53,6 +53,12 @@ patterns:
   name: comment.block.devicetree
   begin: /\*
   end: \*/
+- comment: One Line Comment
+  name: comment.line.double-slash.devicetree
+  begin: \s*(//)
+  beginCaptures:
+    '1': {name: punctuation.definition.comment.line.double-slash.devicetree}
+  end: (?<=$\n)(?<!\\$\n)
 
 # Since libraries can be added via quotes I am going to make the text following
 # a #include statement always show up as string.quoted.double so it gets the

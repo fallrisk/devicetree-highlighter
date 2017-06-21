@@ -22,6 +22,24 @@
 			<string>comment.block.devicetree</string>
 		</dict>
 		<dict>
+			<key>begin</key>
+			<string>\s*(//)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment.line.double-slash.devicetree</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>One Line Comment</string>
+			<key>end</key>
+			<string>(?&lt;=$\n)(?&lt;!\\$\n)</string>
+			<key>name</key>
+			<string>comment.line.double-slash.devicetree</string>
+		</dict>
+		<dict>
 			<key>comment</key>
 			<string>Version I.D.</string>
 			<key>match</key>
