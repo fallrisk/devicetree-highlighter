@@ -107,7 +107,7 @@
 			<key>comment</key>
 			<string>Devicetree Node, page 43</string>
 			<key>match</key>
-			<string>\b(?:([A-Za-z0-9]*):\s)?([A-Za-z0-9\_-]*)(\@)?([A-Za-z0-9\_-]*)\s*\{</string>
+			<string>\b(?:([A-Za-z0-9\_]*):\s)?([A-Za-z0-9\_-]*)(\@)?([A-Za-z0-9\_-]*)\s*\{</string>
 			<key>name</key>
 			<string>node.devicetree</string>
 		</dict>
