@@ -67,6 +67,14 @@ patterns:
   name: support.constant.file-version.devicetree
   match: ^/dts-[a-z0-9]*/;$
 
+- comment: 'Memory Reservation'
+  name: memory-reservation.property-definition.devicetree
+  match: ^(/memreserve/)\s+([\dx]+)\s+([\dx]+)\s*;$
+  captures:
+    '1': { name: keyword.standard.devicetree }
+    '2': { name: constant.numeric.memory-reservation.devicetree }
+    '3': { name: constant.numeric.memory-reservation.devicetree }
+
 - name: keyword.standard.devicetree
   match: (\#include|/include/)\s+(".*")
   captures:

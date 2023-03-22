@@ -53,6 +53,32 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
+					<string>keyword.standard.devicetree</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.memory-reservation.devicetree</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.memory-reservation.devicetree</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>Memory Reservation</string>
+			<key>match</key>
+			<string>^(/memreserve/)\s+([\dx]+)\s+([\dx]+)\s*;$</string>
+			<key>name</key>
+			<string>memory-reservation.property-definition.devicetree</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
 					<string>string.quoted.double.devicetree</string>
 				</dict>
 			</dict>
