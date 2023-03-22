@@ -97,22 +97,38 @@ patterns:
 
 - comment: 'Property Definition'
   name: property-definition.devicetree
-  begin: ((compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)|[\w,-]*)\s=
-  beginCaptures:
-    '1': { name: variable.property-name.devicetree }
-    '2': { name: variable.language.devicetree }
-  end: \;
   patterns:
-  - include: '#quote'
-  - include: '#macro-def'
-  - include: '#numeric'
+  - name: interrupt.property-definition.devicetree
+    begin: ^\s*(interrupts|interrupt-parent|interrupts-extended|\#interrupt-cells|interrupt-map|interrupt-map-mask)\s*=
+    beginCaptures:
+      '1': { name: variable.language.devicetree }
+    end: \;
+    patterns:
+    - include: '#quote'
+    - include: '#macro-def'
+    - include: '#numeric'
+  - name: default.property-definition.devicetree
+    begin: ^\s*((compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)|[\w,-]*)\s*=
+    beginCaptures:
+      '1': { name: variable.property-definition.devicetree }
+      '2': { name: variable.language.devicetree }
+    end: \;
+    patterns:
+    - include: '#quote'
+    - include: '#macro-def'
+    - include: '#numeric'
 
 - comment: 'This is for property definitions with empty value. Example: ranges;'
   name: empty.property-defintion.devicetree
-  match: ((compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)|[\w,-]*)\;
-  captures:
-    '1': { name: variable.property-name.devicetree }
-    '2': { name: variable.language.devicetree }
+  patterns:
+  - name: default.empty.property-defintion.devicetree
+    match: ^\s*(compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)\;
+    captures:
+      '1': { name: variable.language.devicetree }
+  - name: default.empty.property-defintion.devicetree
+    match: ^\s*(interrupt-controller)\;
+    captures:
+      '1': { name: variable.language.devicetree }
 
 repository:
   numeric:

@@ -138,63 +138,117 @@
 			<string>node.devicetree</string>
 		</dict>
 		<dict>
-			<key>begin</key>
-			<string>((compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)|[\w,-]*)\s=</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>variable.property-name.devicetree</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>variable.language.devicetree</string>
-				</dict>
-			</dict>
 			<key>comment</key>
 			<string>Property Definition</string>
-			<key>end</key>
-			<string>\;</string>
 			<key>name</key>
 			<string>property-definition.devicetree</string>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>include</key>
-					<string>#quote</string>
+					<key>begin</key>
+					<string>^\s*(interrupts|interrupt-parent|interrupts-extended|\#interrupt-cells|interrupt-map|interrupt-map-mask)\s*=</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>variable.language.devicetree</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>\;</string>
+					<key>name</key>
+					<string>interrupt.property-definition.devicetree</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#quote</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#macro-def</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#numeric</string>
+						</dict>
+					</array>
 				</dict>
 				<dict>
-					<key>include</key>
-					<string>#macro-def</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#numeric</string>
+					<key>begin</key>
+					<string>^\s*((compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)|[\w,-]*)\s*=</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>variable.property-definition.devicetree</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>variable.language.devicetree</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>\;</string>
+					<key>name</key>
+					<string>default.property-definition.devicetree</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#quote</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#macro-def</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#numeric</string>
+						</dict>
+					</array>
 				</dict>
 			</array>
 		</dict>
 		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>variable.property-name.devicetree</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>variable.language.devicetree</string>
-				</dict>
-			</dict>
 			<key>comment</key>
 			<string>This is for property definitions with empty value. Example: ranges;</string>
-			<key>match</key>
-			<string>((compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)|[\w,-]*)\;</string>
 			<key>name</key>
 			<string>empty.property-defintion.devicetree</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>variable.language.devicetree</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>^\s*(compatible|model|phandle|status|\#address-cells|\#size-cells|reg|virtual-reg|ranges|dma-ranges|device_type)\;</string>
+					<key>name</key>
+					<string>default.empty.property-defintion.devicetree</string>
+				</dict>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>variable.language.devicetree</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>^\s*(interrupt-controller)\;</string>
+					<key>name</key>
+					<string>default.empty.property-defintion.devicetree</string>
+				</dict>
+			</array>
 		</dict>
 	</array>
 	<key>repository</key>
