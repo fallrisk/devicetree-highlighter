@@ -68,7 +68,7 @@ patterns:
   match: ^/dts-[a-z0-9]*/;$
 
 - name: keyword.standard.devicetree
-  match: \#include (.*)
+  match: (\#include|/include/)\s+(".*")
   captures:
     '1': { name: string.quoted.double.devicetree }
 

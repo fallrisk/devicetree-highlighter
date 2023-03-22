@@ -57,7 +57,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>\#include (.*)</string>
+			<string>(\#include|/include/)\s+(".*")</string>
 			<key>name</key>
 			<string>keyword.standard.devicetree</string>
 		</dict>
